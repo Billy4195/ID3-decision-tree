@@ -1,6 +1,7 @@
 import csv
 import math
 import pygraphviz as GP
+import json
 
 def read_csv_file(filename):
     data = []
@@ -165,11 +166,20 @@ def instance_classify(node,instance):
 def validate_tree(root,test_data):
     success_count = 0
     fail_count = 0
+    result = {}
     for instance in test_data:
-        label = instance_classify(root,instance)
-        if label == instance[4]:
+        prediction = instance_classify(root,instance).decode('utf-8')
+        label = instance[4].decode('utf-8')
+        if label not in result:
+            result[label] = {}
+        if prediction not in result[label]:
+            result[label][prediction] = 1
+        else:
+            result[label][prediction] += 1
+        if prediction == label:
             success_count += 1
         else:
             fail_count += 1
+    print(json.dumps(result))
 
     print(success_count/(success_count+fail_count))
