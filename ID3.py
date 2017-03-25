@@ -1,6 +1,7 @@
 from tools import *
 from tree import Node
 import numpy as np
+import sys
 
 def ID3(K):
     data = read_csv_file('iris.data')
@@ -32,5 +33,10 @@ def ID3(K):
 
         validate_tree(root,testing_data)
 
-ID3(5)
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        K = int(sys.argv[1])
+        ID3(K)
+    else:
+        ID3(1)
 
