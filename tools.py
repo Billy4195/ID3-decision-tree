@@ -122,11 +122,7 @@ def find_next_node(node):
 def draw_graph(root):
     node_list = []
     node_count = 1
-    Graph = GP.AGraph()
-    if root.leaf:
-        Graph.add_node(get_node_label(root),shape='circle')
-    else:
-        Graph.add_node(get_node_label(root),shape='box')
+    if not root.leaf:
         node_list.append(root)
     fp = open('tree.dot','w')
     print("digraph {",file=fp)
@@ -139,16 +135,12 @@ def draw_graph(root):
             print('\t%s\t [shape=box];' % par_label,file=fp)
         if cur_node.left:
             left_label = get_node_label(cur_node.left)
-            Graph.add_node(left_label)
             edge_label = '"%s < %f"' % (index_to_feature_name(cur_node.threshold_index),cur_node.threshold)
-            Graph.add_edge(par_label,left_label,label=edge_label)
             print('\t%s -> %s \t [label=%s];' % (par_label,left_label,edge_label),file=fp)
             node_list.append(cur_node.left)
         if cur_node.right:
             right_label = get_node_label(cur_node.right)
-            Graph.add_node(right_label)
             edge_label = '"%s >= %f"' % (index_to_feature_name(cur_node.threshold_index),cur_node.threshold)
-            Graph.add_edge(par_label,right_label,label=edge_label)
             print('\t%s -> %s \t [label=%s];' % (par_label,right_label,edge_label),file=fp)
             node_list.append(cur_node.right)
 
