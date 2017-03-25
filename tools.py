@@ -24,11 +24,11 @@ def find_node_to_split(node):
         return node
 
     left = find_node_to_split(node.left)
-    if not(left is None):
+    if not(left is None) and len(left.data) > 10:
         return left
 
     right = find_node_to_split(node.right)
-    if not(right is None):
+    if not(right is None) and len(right.data) > 10:
         return right
 
     return None
@@ -134,7 +134,7 @@ def draw_graph(root):
         cur_node = node_list.pop(0)
         par_label = get_node_label(cur_node)
         if cur_node.leaf:
-            print('\t%s\t [shape=circle];' % par_label,file=fp)
+            print('\t%s\t [shape=oval];' % par_label,file=fp)
         else:
             print('\t%s\t [shape=box];' % par_label,file=fp)
         if cur_node.left:
@@ -153,3 +153,23 @@ def draw_graph(root):
             node_list.append(cur_node.right)
 
     print("}",file=fp)
+
+def instance_classify(node,instance):
+    if node.leaf:
+        return node.label
+    if instance[node.threshold_index] < node.threshold:
+        return instance_classify(node.left,instance)
+    else:
+        return instance_classify(node.right,instance)
+
+def validate_tree(root,test_data):
+    success_count = 0
+    fail_count = 0
+    for instance in test_data:
+        label = instance_classify(root,instance)
+        if label == instance[4]:
+            success_count += 1
+        else:
+            fail_count += 1
+
+    print(success_count/(success_count+fail_count))

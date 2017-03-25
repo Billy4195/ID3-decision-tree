@@ -21,5 +21,7 @@ while cur_node != None:
     cur_node.right = Node(right,node_count)
     cur_node.leaf = False
 
-    cur_node = find_node_to_split(cur_node)
+    cur_node = find_node_to_split(root)
 draw_graph(root)
+
+validate_tree(root,data)
