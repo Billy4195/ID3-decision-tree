@@ -1,7 +1,6 @@
 import csv
 import math
 import pygraphviz as GP
-import json
 
 def read_csv_file(filename):
     data = []
@@ -180,6 +179,5 @@ def validate_tree(root,test_data):
             success_count += 1
         else:
             fail_count += 1
-    print(json.dumps(result))
 
-    print(success_count/(success_count+fail_count))
+    return success_count/(success_count+fail_count),result

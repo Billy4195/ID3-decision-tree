@@ -1,6 +1,8 @@
 from tools import *
 from tree import Node
+from pprint import pprint
 import numpy as np
+import json
 import sys
 
 def ID3(K):
@@ -31,7 +33,9 @@ def ID3(K):
             cur_node = find_node_to_split(root)
         draw_graph(root)
 
-        validate_tree(root,testing_data)
+        accuracy,result = validate_tree(root,testing_data)
+        print("Accuracy: %f %%" % accuracy)
+        pprint(result)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
