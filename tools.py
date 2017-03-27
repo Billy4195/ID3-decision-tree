@@ -119,12 +119,12 @@ def find_next_node(node):
         return node.right
     return None
 
-def draw_graph(root):
+def draw_graph(root,title=None):
     node_list = []
     node_count = 1
     if not root.leaf:
         node_list.append(root)
-    fp = open('tree.dot','w')
+    fp = open('tree%s.dot' % title,'w')
     print("digraph {",file=fp)
     while len(node_list):
         cur_node = node_list.pop(0)

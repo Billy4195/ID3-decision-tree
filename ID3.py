@@ -31,7 +31,7 @@ def ID3(K):
             cur_node.right = Node(right,node_count)
             cur_node.leaf = False
             cur_node = find_node_to_split(root)
-        draw_graph(root)
+        draw_graph(root,'%d_%d' % (K,idx))
 
         accuracy,result = validate_tree(root,testing_data)
         print("Accuracy: %f %%" % accuracy)
